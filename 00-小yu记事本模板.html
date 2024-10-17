@@ -1,0 +1,74 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8" />
+<meta http-equiv="X-UA-Compatible" content="IE=edge" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<link rel="stylesheet" href="./index.css" />
+<title>记事本</title>
+</head>
+<body>
+
+<!-- 主体区域 -->
+<section id="app">
+  <!-- 输入框 -->
+  <header class="header">
+    <h1>小于记事本</h1>
+    <input placeholder="请输入任务" @keyup.enter="addItem(message)" class="new-todo" v-model="message" />
+    <button @click="addItem(message)"  @keyup.enter="addItem(message)"class="add" >添加任务</button>
+
+  </header>
+  <!-- 列表区域 -->
+  <section class="main">
+    <ul class="todo-list">
+      
+      <li class="todo" v-for="(item,index) in list" :key ="index" class="index"> 
+        <br><span class="index" > {{ index+   1}}. </span>{{ item.name }}
+        <div class="view">
+          
+          <button @click="deleteItem(item.id)" class="destroy"></button>
+        </div>
+      </li>
+    </ul>
+  </section>
+  <!-- 统计和清空 -->
+  <footer class="footer">
+    
+    <!-- 统计 -->
+    <span class="todo-count">合 计:<strong> {{list.length}} </strong></span>
+    <!-- 清空 -->
+    <button @click="list=[]" class="clear-completed">
+      清空任务
+    </button>
+  </footer>
+</section>
+
+<!-- 底部 -->
+<script src="https://cdn.jsdelivr.net/npm/vue/dist/vue.js"></script>
+<script>
+
+  const app = new Vue({
+    el: '#app',
+    data: {
+      message:"",
+      list:[
+        {id:1,name:'上体育课'},
+        {id:2,name:'打篮球'},
+        {id:3,name:'吃饭'}
+      ]
+      
+    },
+    methods:{
+      deleteItem(id){
+        this.list=this.list.filter(item =>item.id != id)
+      },
+      addItem(message){
+           this.list.push({id:this.list.length+1,name:message})
+
+      }
+    }
+  })
+
+</script>
+</body>
+</html>
